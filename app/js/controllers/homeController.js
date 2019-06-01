@@ -7,7 +7,9 @@
         const vm = this
 
         vm.dados = {}
+        vm.img = {}
         vm.isLoading = false
+        vm.imgIsLoading = false
 
         // GET
         function listar() {
@@ -27,10 +29,16 @@
         }
         // POST
         vm.adicionar = function(d) {
+            if(!d.imagem) {
+                vm.imagem = null
+            } else {
+                vm.imagem = vm.img.data.filePath
+            }
             let objData = {
                 titulo: d.titulo,
                 conteudo: d.conteudo,
                 autor: d.autor,
+                img: vm.imagem,
                 ativo: d.ativo
             }
             $http.post(config.posts, objData)
@@ -49,14 +57,21 @@
         // Abre modal edit
         vm.openEdit = function(d) {
             vm.dados = d
+            vm.img = {}
             $('#modalEdit').modal('show')
         }
         // PUT
         vm.editar = function(d) {
+            if(!d.imagem) {
+                vm.imagem = d.imagem
+            } else {
+                vm.imagem = vm.img.data.filePath
+            }
             let objData = {
                 titulo: d.titulo,
                 conteudo: d.conteudo,
                 autor: d.autor,
+                img: vm.imagem,
                 ativo: d.ativo
             }
             $http.put(`${config.posts}/${d.id}`, objData)
@@ -95,6 +110,43 @@
                     }
                 })
             }
+        }
+
+
+        // Upload
+        vm.upload = function(d) {
+            vm.imgIsLoading = true
+            const file = d
+            let fd = new FormData()
+            fd.append('imagem', file)
+            $http.post(
+                config.upload,
+                fd,
+                {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                }
+            ).then(function (response) {
+                if(response.data.status) {
+                    toaster.success('Sucesso!', response.data.msg)
+                    vm.img = response.data
+                    vm.imgIsLoading = false
+                } else {
+                    toaster.error('Erro', response.data.msg)
+                    vm.imgIsLoading = false
+                }
+            })
+            .catch(function(error) {
+                toaster.error('Erro', 'Houve um erro')
+                vm.imgIsLoading = false
+            })
+        }
+
+
+        // Abrir modal Detalhes
+        vm.detalhes = function(d) {
+            vm.dados = d
+            $('#modalDetalhes').modal('show')
         }
     })
 })()

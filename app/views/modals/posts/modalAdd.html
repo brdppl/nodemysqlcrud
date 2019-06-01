@@ -8,6 +8,17 @@
             <form ng-submit="vm.adicionar(vm.dados)">
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-12 mb-15">
+                            <label>Capa:</label>
+                            <input type="file" name="imagem" class="form-control mb-15" file-model="vm.dados.imagem">
+                            <button type="button" class="btn btn-info" ng-click="vm.upload(vm.dados.imagem)" ng-disabled="vm.imgIsLoading">
+                                <span ng-if="!vm.imgIsLoading"><i class="fas fa-cloud-upload-alt"></i> Upload</span>
+                                <span ng-if="vm.imgIsLoading"><div class="spinner-border spinner-border-sm"></div></span>
+                            </button>
+                        </div>
+                        <div class="col-12 mb-15" ng-if="vm.img.status">
+                            <img ng-src="{{vm.img.data.filePath}}" class="img-fluid">
+                        </div>
                         <div class="col-12 col-md-6 mb-15">
                             <label>Título</label>
                             <input type="text" class="form-control" ng-model="vm.dados.titulo" required>

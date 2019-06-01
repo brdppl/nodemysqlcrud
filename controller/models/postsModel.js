@@ -12,6 +12,9 @@ const Posts = db.sequelize.define('posts', {
     },
     ativo: {
         type: db.Sequelize.BOOLEAN
+    },
+    img: {
+        type: db.Sequelize.STRING
     }
 })
 

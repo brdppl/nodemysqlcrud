@@ -1,4 +1,4 @@
-const port = 3306
+const port = 4000
 
 const bodyParser = require('body-parser')
 const express = require('express')

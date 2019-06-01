@@ -11,4 +11,8 @@ module.exports = function(server) {
     router.post('/posts', posts.createPost)
     router.delete('/posts/:id', posts.deletePost)
     router.put('/posts/:id', posts.editPost)
+
+    // File
+    const file = require('../api/upload')
+    router.post('/upload', file)
 }

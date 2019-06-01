@@ -3,7 +3,7 @@
 </div>
 
 <div class="container">
-    <button type="button" class="btn btn-success mb-30" ng-click="vm.openAdd()">Adicionar</button>
+    <button type="button" class="btn btn-success mb-30" ng-click="vm.openAdd()"><i class="fas fa-plus"></i> Adicionar</button>
     <div class="content centraliza" ng-if="vm.isLoading">
         <div class="spinner-grow" style="width: 3rem; height: 3rem;"></div>
     </div>
@@ -13,6 +13,7 @@
                 <tr>
                     <th>#</th>
                     <th>Título</th>
+                    <th>Autor</th>
                     <th>Conteúdo</th>
                     <th>Data postagem</th>
                     <th>Ativo</th>
@@ -21,10 +22,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="x in vm.posts | orderBy: 'createdAt'">
-                    <td>{{$index+1}}</td>
-                    <td>{{x.titulo}}</td>
-                    <td>{{x.conteudo | limite}}</td>
-                    <td>{{x.createdAt | date:'dd/MM/yyyy'}}</td>
+                    <td ng-click="vm.detalhes(x)">{{$index+1}}</td>
+                    <td ng-click="vm.detalhes(x)">{{x.titulo}}</td>
+                    <td ng-click="vm.detalhes(x)">{{x.autor}}</td>
+                    <td ng-click="vm.detalhes(x)">{{x.conteudo | limite}}</td>
+                    <td ng-click="vm.detalhes(x)">{{x.createdAt | date:'dd/MM/yyyy'}}</td>
                     <td>
                         <button class="btn btn-light btn-sm" ng-click="vm.ativo(x)">
                             <i class="fas" ng-class="{'fa-toggle-on': x.ativo, 'fa-toggle-off': !x.ativo}"></i>
@@ -44,3 +46,5 @@
 <div ng-include="'views/modals/posts/modalAdd.html'"></div>
 <!-- Modal edit -->
 <div ng-include="'views/modals/posts/modalEdit.html'"></div>
+<!-- Modal detalhes -->
+<div ng-include="'views/modals/posts/modalDetalhes.html'"></div>
